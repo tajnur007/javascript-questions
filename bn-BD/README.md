@@ -107,3 +107,39 @@ for (let i = 0; i < 3; i++) {
 </details>
 
 ---
+
+###### ৩. আউটপুট কি হবে?
+
+```javascript
+const shape = {
+  radius: 10,
+  diameter() {
+    return this.radius * 2;
+  },
+  perimeter: () => 2 * Math.PI * this.radius,
+};
+
+console.log(shape.diameter());
+console.log(shape.perimeter());
+```
+
+- A: `20` এবং `62.83185307179586`
+- B: `20` এবং `NaN`
+- C: `20` এবং `63`
+- D: `NaN` এবং `63`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: B
+
+মনে রাখবেন যে `diameter` এর মান একটি রেগুলার ফাংশন, যেখানে `perimeter` এর মান একটি অ্যারো ফাংশন।
+
+অ্যারো ফাংশনের মাধ্যমে, `this` কীওয়ার্ডটি তার বর্তমান আশেপাশের স্কোপকে বোঝায়, যা রেগুলার ফাংশনের বিপরীত! এর মানে হল, যখন আমরা `perimeter` কল করি তখন এটি shape অবজেক্টকে বোঝায় না, তবে এর আশেপাশের স্কোপকে বোঝায় (উদাহরণস্বরূপ window)।
+
+সেই অবজেক্টটিতে `radius` নামে কোনো মান নেই, যা `NaN` রিটার্ন করে।
+
+</p>
+</details>
+
+---
