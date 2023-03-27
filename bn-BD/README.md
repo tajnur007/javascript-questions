@@ -204,3 +204,106 @@ const mouse = {
 </details>
 
 ---
+
+###### ৬. আউটপুট কি হবে?
+
+```javascript
+let c = { greeting: 'Hey!' };
+let d;
+
+d = c;
+c.greeting = 'Hello';
+console.log(d.greeting);
+```
+
+- A: `Hello`
+- B: `Hey!`
+- C: `undefined`
+- D: `ReferenceError`
+- E: `TypeError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+জাভাস্ক্রিপ্টে, সকল অবজেক্ট একে অপরের সমান সেট করার সময় _রেফারেন্স_ দ্বারা ইন্টারঅ্যাক্ট করে।
+
+প্রথমত, ভেরিয়েবল `c` একটি অবজেক্টের মান ধরে রাখে। পরে আমরা ঐ একই রেফারেন্সের সাথে `d` কে অ্যাসাইন করি যা `c` অবজেক্টে আছে।
+
+<img src="https://i.imgur.com/ko5k0fs.png" width="200">
+
+এক্ষেত্রে যখন আপনি কোন একটি অবজেক্টকে পরিবর্তন করেন তখন আসলে আপনি সবগুলোকেই পরিবর্তন করেন।
+
+</p>
+</details>
+
+---
+
+###### ৭. আউটপুট কি হবে?
+
+```javascript
+let a = 3;
+let b = new Number(3);
+let c = 3;
+
+console.log(a == b);
+console.log(a === b);
+console.log(b === c);
+```
+
+- A: `true` `false` `true`
+- B: `false` `false` `true`
+- C: `true` `false` `false`
+- D: `false` `true` `true`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: C
+
+`new Number()` একটি বিল্ট-ইন ফাংশন কনস্ট্রাক্টর। যদিও এটি দেখতে একটি সংখ্যার মতো, এটি আসলে সংখ্যা নয়: এটিতে বেশ কিছু অতিরিক্ত বৈশিষ্ট্য রয়েছে এবং এটি একটি অবজেক্ট।
+
+যখন আমরা `==` অপারেটর (ইকুয়ালিটি অপারেটর) ব্যবহার করি, তখন এটি শুধুমাত্র একই _মান_ আছে কিনা সেটা চেক করে। তাদের উভয়েরই `3` এর মান আছে, তাই এটি `true` রিটার্ন করে।
+
+যাইহোক, যখন আমরা `===` অপারেটর (স্ট্রিক্ট ইকুয়ালিটি অপারেটর) ব্যবহার করি, তখন মান _এবং_ টাইপ একই হওয়া উচিত। এটা নয়: `new Number()` কোনো সংখ্যা নয়, এটি একটি **object**। উভয়ই `false` রিটার্ন করে।
+
+</p>
+</details>
+
+---
+
+###### ৮. আউটপুট কি হবে?
+
+```javascript
+class Chameleon {
+  static colorChange(newColor) {
+    this.newColor = newColor;
+    return this.newColor;
+  }
+
+  constructor({ newColor = 'green' } = {}) {
+    this.newColor = newColor;
+  }
+}
+
+const freddie = new Chameleon({ newColor: 'purple' });
+console.log(freddie.colorChange('orange'));
+```
+
+- A: `orange`
+- B: `purple`
+- C: `green`
+- D: `TypeError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: D
+
+`colorChange` ফাংশনটি স্ট্যাটিক। স্ট্যাটিক মেথডগুলি শুধুমাত্র সেই কনস্ট্রাক্টরের মধ্যে ব্যবহার করার জন্য ডিজাইন করা হয়েছে যেখানে তাদেরকে তৈরি করা হয়েছে এবং কোন children এর কাছে এই মেথডগুলিকে পাঠানো হয় না বা ক্লাস ইনস্ট্যান্স হিসাবে কল করা যায় না। যেহেতু `freddie` হল Chameleon ক্লাসের একটি ইনস্ট্যান্স সেহেতু ফাংশনটিকে এটার সাথে কল করা যাবে না। একটি `TypeError` দেখাবে।
+
+</p>
+</details>
+
+---
