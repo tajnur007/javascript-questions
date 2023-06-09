@@ -307,3 +307,106 @@ console.log(freddie.colorChange('orange'));
 </details>
 
 ---
+
+###### ৯. আউটপুট কি হবে?
+
+```javascript
+let greeting;
+greetign = {}; // Typo!
+console.log(greetign);
+```
+
+- A: `{}`
+- B: `ReferenceError: greetign is not defined`
+- C: `undefined`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+এটি অবজেক্টটিকে লগ আকারে দেখাবে কারণ আমরা আসলে গ্লোবাল অবজেক্টে একটি খালি অবজেক্ট তৈরী করেছি! যখন আমরা `greeting` কে ভুলক্রমে `greetign` হিসেবে টাইপ করি তখন জাভাস্ক্রিপ্টের ইন্টারপ্রেটার আসলে এটাকে এভাবে দেখে:
+
+1. Node.js এ `global.greetign = {}` এভাবে।
+2. ব্রাউজারে `window.greetign = {}`, `frames.geetign = {}` এবং `self.greetign` এভাবে।
+3. ওয়েব ওয়ার্কার্সে `self.greetign` এভাবে।
+4. সব ধরনের এনভায়রনমেন্টে `globalThis.greetign` এভাবে।
+
+আমরা এটি এড়িয়ে চলতে `"use strict"` ব্যবহার করতে পারি। এটি নিশ্চিত করে যে আপনি যেকোনো ভেরিয়েবলে মান সেট করার আগে ভেরিয়েবলটিকে ডিক্লেয়ার করেছেন।
+
+In order to avoid this, we can use `"use strict"`. This makes sure that you have declared a variable before setting it equal to anything.
+
+</p>
+</details>
+
+---
+
+###### ১০. এটা করলে কি হবে?
+
+```javascript
+function bark() {
+  console.log('Woof!');
+}
+
+bark.animal = 'dog';
+```
+
+- A: কিছুই হবে না, এটা পুরোপুরি ঠিক আছে!
+- B: `SyntaxError`. এই ভাবে আপনি একটি ফাংশনে প্রোপার্টি যোগ করতে পারবেন না। 
+- C: `"Woof"` লগ আকারে দেখাবে।
+- D: `ReferenceError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+জাভাস্ক্রিপ্টে এটা সম্ভব, কারণ ফাংশনগুলি অবজেক্ট হিসেবে ব্যবহার করা হয়! (প্রিমিটিভ টাইপের সবকিছুই অবজেক্ট)।
+
+ফাংশন একটি বিশেষ ধরনের অবজেক্ট। আপনি আসলে যে কোড লিখেন সেটা আসলে ফাংশন নয়। ফাংশনটি একটি অবজেক্ট যার প্রপার্টিগুলি রয়েছে। এই প্রপার্টি কল করা সম্ভব।
+
+</p>
+</details>
+
+---
+
+###### ১১. আউটপুট কি হবে?
+
+```javascript
+function Person(firstName, lastName) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+}
+
+const member = new Person('Lydia', 'Hallie');
+Person.getFullName = function() {
+  return `${this.firstName} ${this.lastName}`;
+};
+
+console.log(member.getFullName());
+```
+
+- A: `TypeError`
+- B: `SyntaxError`
+- C: `Lydia Hallie`
+- D: `undefined` `undefined`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+জাভাস্ক্রিপ্টে, ফাংশনগুলি অবজেক্ট হয় এবং এর জন্যই `getFullName` মেথডটি নিজস্ব কনস্ট্রাক্টর ফাংশন অবজেক্টে যোগ হয়। এই কারণে, আমরা `Person.getFullName()` কল করতে পারি, কিন্তু `member.getFullName` একটি `TypeError` থ্রো করে।
+
+আপনি যদি একটি মেথডকে সব অবজেক্ট ইনস্ট্যান্সগুলিতে ব্যবহার করতে চান, তবে এটি প্রোটোটাইপ প্রপার্টিতে যোগ করতে হবে:
+
+```js
+Person.prototype.getFullName = function() {
+  return `${this.firstName} ${this.lastName}`;
+};
+```
+
+</p>
+</details>
+
+---
