@@ -410,3 +410,104 @@ Person.prototype.getFullName = function() {
 </details>
 
 ---
+
+###### ১২. আউটপুট কি হবে?
+
+```javascript
+function Person(firstName, lastName) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+}
+
+const lydia = new Person('Lydia', 'Hallie');
+const sarah = Person('Sarah', 'Smith');
+
+console.log(lydia);
+console.log(sarah);
+```
+
+- A: `Person {firstName: "Lydia", lastName: "Hallie"}` এবং `undefined`
+- B: `Person {firstName: "Lydia", lastName: "Hallie"}` এবং `Person {firstName: "Sarah", lastName: "Smith"}`
+- C: `Person {firstName: "Lydia", lastName: "Hallie"}` এবং `{}`
+- D: `Person {firstName: "Lydia", lastName: "Hallie"}` এবং `ReferenceError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+`sarah` এর জন্য আমরা `new` কিওয়ার্ড ব্যবহার করিনি। `new` কিওয়ার্ড ব্যবহার করলে `this` তখন আমরা নতুন যে খালি অবজেক্টকে তৈরী করেছি সেটাকে রেফার করে। তবে, আপনি যদি `new` কিওয়ার্ড যোগ না করেন, `this` তখন **global object** কে রেফার করে!
+
+আমরা বলেছি `this.firstName` সমান `"Sarah"` এবং `this.lastName` সমান `"Smith"`। আসলে আমরা যেটা করেছি সেটা হলো `global.firstName = 'Sarah'` এবং `global.lastName = 'Smith'`। `sarah` এর মান ইতিমধ্যে `undefined`, কারণ আমরা `Person` ফাংশন থেকে কোনো মান রিটার্ন করিনি।
+
+</p>
+</details>
+
+---
+
+###### ১৩. ইভেন্ট প্রোপাগেশনের তিনটি ধাপ কি কি?
+
+- A: Target > Capturing > Bubbling
+- B: Bubbling > Target > Capturing
+- C: Target > Bubbling > Capturing
+- D: Capturing > Target > Bubbling
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: D
+
+**capturing** ধাপে, ইভেন্টটি পূর্ববর্তী এলিমেন্ট গুলির মাধ্যমে নীচের টার্গেট এলিমেন্টে প্রবেশ করে। এরপর ইভেন্টটি **target** এলিমেন্টে পৌঁছে যায় এবং **bubbling** শুরু হয়।
+
+<img src="https://i.imgur.com/N18oRgd.png" width="200">
+
+</p>
+</details>
+
+---
+
+###### ১৪. সব অবজেক্টের প্রোটোটাইপ থাকে।
+
+- A: true
+- B: false
+s
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: B
+
+**base object** ব্যতিত সব অবজেক্টেরই প্রোটোটাইপ থাকে। বেস অবজেক্ট হলো ইউজার কর্তৃক তৈরি করা অবজেক্ট বা `new` কিওয়ার্ড ব্যবহার করে তৈরি করা অবজেক্ট। বেস অবজেক্টটি কিছু মেথড এবং প্রপার্টি অ্যাক্সেস করতে পারে, যেমন `.toString`। আপনি জাভাস্ক্রিপ্টের নিজস্ব মেথডগুলি ব্যবহার করতে পারেন তার কারণ এটিই! এধরনের মেথডগুলি প্রোটোটাইপে পাওয়া যাবে। যদিও জাভাস্ক্রিপ্ট আপনার অবজেক্টে এটি সরাসরি খুঁজে পায়না, এটি প্রোটোটাইপ চেইনে যায় এবং সেখানে এটি পায়, যা আপনার জন্য অ্যাক্সেসেবল করে।
+
+</p>
+</details>
+
+---
+
+###### ১৫. আউটপুট কি হবে?
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+
+sum(1, '2');
+```
+
+- A: `NaN`
+- B: `TypeError`
+- C: `"12"`
+- D: `3`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: C
+
+জাভাস্ক্রিপ্ট একটি **dynamically typed language**: ভেরিয়েবলগুলি কোন ধরনের হবে আমরা সেটা নির্দিষ্ট করে বলিনা। আপনাকে না জানিয়েই মানগুলি সয়ংক্রিয়ভাবে অন্য একটি টাইপে রূপান্তরিত হতে পারে, যাকে _implicit type coercion_ বলে। **Coercion** হলো একটি টাইপকে অন্য টাইপে রূপান্তর করা।
+
+এই উদাহরণে, জাভাস্ক্রিপ্ট `1` সংখ্যাটিকে একটি স্ট্রিং-এ রূপান্তর করে, যাতে ফাংশনটি স্বাভাবিক হয়ে একটি মান ফেরত দেয়। একটি সংখ্যার টাইপ (`1`) এবং একটি স্ট্রিং টাইপ (`'2'`) যোগ করার সময়, সংখ্যাটি স্ট্রিং হিসাবে ব্যবহৃত হয়। আমরা স্ট্রিংগুলিকে `"Hello" + "World"` এভাবে যুক্ত করতে পারি, তাই এখানে আসলে যেটা ঘটতেছে সেটা হলো `"1" + "2"` যা `"12"` রিটার্ন করে।
+
+</p>
+</details>
+
+---
