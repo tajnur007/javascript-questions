@@ -961,3 +961,159 @@ baz();
 </details>
 
 ---
+
+###### ৩১. বাটনে ক্লিক করলে `event.target` কোন হবে?
+
+```html
+<div onclick="console.log('first div')">
+  <div onclick="console.log('second div')">
+    <button onclick="console.log('button')">
+      Click!
+    </button>
+  </div>
+</div>
+```
+
+- A: বাইরের `div`
+- B: ভিতরের `div`
+- C: `button` নিজেই
+- D: সমস্ত নেস্টেড উপাদানগুলির একটি অ্যারে।
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: C
+
+সবচেয়ে গভীরতম নেস্টেড উপাদানটি ইভেন্ট সৃষ্টি করেছে, এটিই ইভেন্টের টার্গেট। আপনি `event.stopPropagation`-এর দ্বারা ইভেন্ট বাবলিং বন্ধ করতে পারবেন।
+
+</p>
+</details>
+
+---
+
+###### ৩২. আপনি প্যারাগ্রাফটিতে ক্লিক করলে লগের আউটপুট কি হবে?
+
+```html
+<div onclick="console.log('div')">
+  <p onclick="console.log('p')">
+    Click here!
+  </p>
+</div>
+```
+
+- A: `p` `div`
+- B: `div` `p`
+- C: `p`
+- D: `div`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+আমরা যখন `p` এলিমেন্টে ক্লিক করি, তখন আমরা দুটি লগ দেখতে পাই: `p` এবং `div`। ইভেন্ট প্রোপাগেশনের তিনটি ধাপ আছে: ক্যাপচারিং, টার্গেট এবং বাবলিং। ডিফল্ট অবস্থায় ইভেন্ট হ্যান্ডলারগুলি বাবলিং ফেজে কার্যকর হয় (যদি না আপনি `useCapture` কে `true` সেট করেন)। এটি সবচেয়ে ভিতরের নেস্টেড উপাদান থেকে বাইরের দিকে যায়।
+
+</p>
+</details>
+
+---
+
+###### ৩৩. আউটপুট কি হবে?
+
+```javascript
+const person = { name: 'Lydia' };
+
+function sayHi(age) {
+  return `${this.name} is ${age}`;
+}
+
+console.log(sayHi.call(person, 21));
+console.log(sayHi.bind(person, 21));
+```
+
+- A: `undefined is 21` `Lydia is 21`
+- B: `function` `function`
+- C: `Lydia is 21` `Lydia is 21`
+- D: `Lydia is 21` `function`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: D
+
+উভয়ের দ্বারা `this` কীওয়ার্ডটি কোন অবজেক্টেকে রেফার করবে সেটা সেট করে দিতে পারি। যাইহোক, `.call` ফাংশনটিও সাথে সাথে এক্সিকিউট হয়!
+
+`.bind`-এর ক্ষেত্রে এমনটি হয়না, এটি ফাংশনটির একটি কপি রিটার্ন করে, তবে সেটা একটা কন্টেক্সটের ভিতরে! এটি সাথে সাথে এক্সিকিউট হয় না।
+
+</p>
+</details>
+
+---
+
+###### ৩৪. আউটপুট কি হবে?
+
+```javascript
+function sayHi() {
+  return (() => 0)();
+}
+
+console.log(typeof sayHi());
+```
+
+- A: `"object"`
+- B: `"number"`
+- C: `"function"`
+- D: `"undefined"`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: B
+
+IIFE (Immediately Invoked Function Expression) ফাংশনটি যে মান রিটার্ন করে, `sayHi` ফাংশনটি সেই রিটার্নকৃত মানটি রিটার্ন করে। এই ফাংশনটি `0` রিটার্ন করে, যা `"number"` টাইপের।
+
+আপনার জানার জন্য: `typeof` নিম্নলিখিত মানগুলি রিটার্ন করতে পারে: `undefined`, `boolean`, `number`, `bigint`, `string`, `symbol`, `function` এবং `object`। মনে রাখবেন যে `typeof null` `"object"` রিটার্ন করে।
+
+</p>
+</details>
+
+---
+
+###### ৩৫. এই মানগুলির মধ্যে কোনটি কোনটি মিথ্যা (falsy)?
+
+```javascript
+0;
+new Number(0);
+('');
+(' ');
+new Boolean(false);
+undefined;
+```
+
+- A: `0`, `''`, `undefined`
+- B: `0`, `new Number(0)`, `''`, `new Boolean(false)`, `undefined`
+- C: `0`, `''`, `new Boolean(false)`, `undefined`
+- D: সবগুলোই মিথ্যা
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+জাভাস্ক্রিপ্টে আটটি মিথ্যা (falsy) মান রয়েছে:
+
+- `undefined`
+- `null`
+- `NaN`
+- `false`
+- `''` (খালি স্ট্রিং)
+- `0`
+- `-0`
+- `0n` (BigInt(0))
+
+ফাংশন কন্সট্রাক্টর, যেমন `new Number` এবং `new Boolean` এগুলো মিথ্যা (falsy) নয়, বরং সত্য (truthy)।
+
+</p>
+</details>
+
+---
