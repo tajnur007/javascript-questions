@@ -1587,3 +1587,150 @@ console.log(person, birthYear);
 </details>
 
 ---
+
+###### ৫২. আউটপুট কি হবে?
+
+```javascript
+function greeting() {
+  throw 'Hello world!';
+}
+
+function sayHi() {
+  try {
+    const data = greeting();
+    console.log('It worked!', data);
+  } catch (e) {
+    console.log('Oh no an error:', e);
+  }
+}
+
+sayHi();
+```
+
+- A: `It worked! Hello world!`
+- B: `Oh no an error: undefined`
+- C: `SyntaxError: can only throw Error objects`
+- D: `Oh no an error: Hello world!`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: D
+
+`throw` স্টেটমেন্ট ব্যবহার করে আমরা কাস্টম এরর তৈরি করতে পারি। এই স্টেটমেন্ট ব্যবহার করে আপনি এক্সেপশন থ্রো করতে পারেন। এক্সেপশন হতে পারে একটি <b>স্ট্রিং</b>, একটি <b>নাম্বার</b>, একটি <b>বুলিয়ান</b> বা একটি <b>অবজেক্ট</b>। এই ক্ষেত্রে, আমাদের এক্সেপশন হলো স্ট্রিং `'Hello world!'`.
+
+`catch` স্টেটমেন্ট ব্যবহার করে আমরা নির্দিষ্ট করে বলতে পারি যে যখন ট্রাই ব্লকে একটি এক্সেপশন থ্রো হয় তখন কি করবেন। এখানে স্ট্রিং ব্যবহার করে একটি এক্সেপশন থ্রো করা হয়েছে: `'Hello world!'`। `e` এখন সেই স্ট্রিং এর সমান, যেটা আমরা লগ করছি। এর ফলাফল হলো `'Oh an error: Hello world!'`।
+
+</p>
+</details>
+
+---
+
+###### ৫৩. আউটপুট কি হবে?
+
+```javascript
+function Car() {
+  this.make = 'Lamborghini';
+  return { make: 'Maserati' };
+}
+
+const myCar = new Car();
+console.log(myCar.make);
+```
+
+- A: `"Lamborghini"`
+- B: `"Maserati"`
+- C: `ReferenceError`
+- D: `TypeError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: B
+
+যখন আপনি একটি প্রপার্টি রিটার্ন করেন তখন প্রপার্টির মানটি রিটার্ন করা মানের সমান হয়, কনস্ট্রাক্টর ফাংশনে সেট করা মানের সমান হয় না। আমরা স্ট্রিং `"Maserati"` রিটার্ন করেছি, তাই `myCar.make` এর মান `"Maserati"` এর সমান হয়।
+
+</p>
+</details>
+
+---
+
+###### ৫৪. আউটপুট কি হবে?
+
+```javascript
+(() => {
+  let x = (y = 10);
+})();
+
+console.log(typeof x);
+console.log(typeof y);
+```
+
+- A: `"undefined", "number"`
+- B: `"number", "number"`
+- C: `"object", "number"`
+- D: `"number", "undefined"`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+`let x = (y = 10);` এটা আসলে নিচের কোডের শর্টহ্যান্ড নোটেশন:
+
+```javascript
+y = 10;
+let x = y;
+```
+
+যখন আমরা `y` কে `10` এর সমান সেট করি তখন আসলে আমরা গ্লোবাল অবজেক্টে (`window` ব্রাউজারে এবং `global` নোডে) একটি প্রপার্টি `y` যুক্ত করেছি। একটি ব্রাউজারে, `window.y` এখন `10` এর সমান।
+
+এরপর আমরা `x` নামক একটি ভেরিয়েবলে `y` কে এ্যাসাইন করেছি যার মান `10`। `let` কীওয়ার্ড ব্যবহার করে ডিক্লেয়ার করা ভেরিয়েবলগুলি ব্লক স্কোপ হয়, এগুলো যে ব্লকের ভিতরে ডিক্লেয়ার করা হয় শুধুমাত্র সেই ব্লকের মধ্যে ডিফাইন করা হয়; এক্ষেত্রে ইমিডিয়েটলি ইনভোক্ড ফাংশন এক্সপ্রেশন (IIFE) এর মধ্যে সেটা করা হয়েছে। আমরা যখন `typeof` অপারেটর ব্যবহার করছি তখন সেই ব্লকে অপারেন্ড `x` ডিক্লেয়ার করা নাই: আমরা ডিক্লেয়ার করা ব্লকের বাইরে থেকে `x` কে অ্যাক্সেস করার চেষ্টা করছি। এর মানে `x` ডিফাইন করা নাই, আনডিফাইন্ড। যে ভ্যালুর কোনো মান প্রদান করা হয়নি বা ডিক্লেয়ার করা হয়নি তাদের টাইপ হলো `"undefined"`। এই কারণে `console.log(typeof x)` রেজাল্ট হিসেবে `"undefined"` রিটার্ন করে।
+
+তবে, আমরা যখন `y` কে `10` এর সমান সেট করেছি তখন একটি গ্লোবাল ভেরিয়েবল ‌`y` তৈরি করেছি। এই মানটি আমাদের কোডে যেকোনো জায়গা থেকে অ্যাক্সেস করা যায়। `y` কে ডিফাইন করা হয়েছে এবং এটি `"number"` টাইপের মান ধারণ করে আছে। এজন্য `console.log(typeof y)` রেজাল্ট হিসেবে `"number"` রিটার্ন করে।
+
+</p>
+</details>
+
+---
+
+###### ৫৫. আউটপুট কি হবে?
+
+```javascript
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+Dog.prototype.bark = function() {
+  console.log(`Woof I am ${this.name}`);
+};
+
+const pet = new Dog('Mara');
+
+pet.bark();
+
+delete Dog.prototype.bark;
+
+pet.bark();
+```
+
+- A: `"Woof I am Mara"`, `TypeError`
+- B: `"Woof I am Mara"`, `"Woof I am Mara"`
+- C: `"Woof I am Mara"`, `undefined`
+- D: `TypeError`, `TypeError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+আমরা `delete` কীওয়ার্ড ব্যবহার করে অবজেক্টের প্রপার্টিগুলি ডিলেট করতে পারি, এটি প্রোটোটাইপের উপরও প্রয়োগ করা যায়। প্রোটোটাইপে একটি প্রপার্টি ডিলেট করার পর এটি আর প্রোটোটাইপ চেইনে পাওয়া যায় না। এক্ষেত্রে `delete Dog.prototype.bark` এর পরে প্রোটোটাইপে `bark` ফাংশনটি আর পাওয়া যায় না, যদিও আমরা এখনো এটিকে অ্যাক্সেস করার চেষ্টা করছি।
+
+যখন আমরা আসলে এমন কিছু কল করার চেষ্টা করছি যেটি আসলে কোনো ফাংশন না তখন একটি `TypeError` থ্রো হয়। এক্ষেত্রে `TypeError: pet.bark is not a function` হয়, কারণ `pet.bark` হলো `undefined`।
+
+</p>
+</details>
+
+---
