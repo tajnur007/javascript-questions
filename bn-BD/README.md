@@ -1894,3 +1894,172 @@ console.log(admin);
 </details>
 
 ---
+
+###### ৬১. আউটপুট কি হবে?
+
+```javascript
+const person = { name: 'Lydia' };
+
+Object.defineProperty(person, 'age', { value: 21 });
+
+console.log(person);
+console.log(Object.keys(person));
+```
+
+- A: `{ name: "Lydia", age: 21 }`, `["name", "age"]`
+- B: `{ name: "Lydia", age: 21 }`, `["name"]`
+- C: `{ name: "Lydia"}`, `["name", "age"]`
+- D: `{ name: "Lydia"}`, `["age"]`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: B
+
+`defineProperty` মেথড ব্যবহার করে আমরা একটি অবজেক্টে নতুন প্রপার্টি যোগ করতে পারি বা বিদ্যমান প্রপার্টিগুলি পরিবর্তন করতে পারি। `defineProperty` মেথড ব্যবহার করে একটি প্রপার্টি যখন অবজেক্টে যোগ করা হয়, তখন ডিফল্টভাবে সেগুলি _not enumerable_ অবস্থায় থাকে অর্থাৎ অপ্রকাশ্য থাকে। `Object.keys` মেথডটি অবজেক্ট থেকে সব _প্রকাশ্য_ প্রপার্টির নাম রিটার্ন করে, এই ক্ষেত্রে শুধুমাত্র `"name"` রিটার্ন করেছে।
+
+`defineProperty` মেথড ব্যবহার করে যোগ করা প্রপার্টিগুলি ডিফল্টভাবে অপরিবর্তনীয়। আপনি `writable`, `configurable` এবং `enumerable` প্রপার্টিগুলি ব্যবহার করে এই আচরণটি ওভাররাইড করতে পারবেন। এভাবে `defineProperty` মেথড আপনাকে অবজেক্টে যে প্রপার্টিগুলি যোগ করছেন তার উপর আরো বেশি নিয়ন্ত্রণ দেয়।
+
+</p>
+</details>
+
+---
+
+###### ৬২. আউটপুট কি হবে?
+
+```javascript
+const settings = {
+  username: 'lydiahallie',
+  level: 19,
+  health: 90,
+};
+
+const data = JSON.stringify(settings, ['level', 'health']);
+console.log(data);
+```
+
+- A: `"{"level":19, "health":90}"`
+- B: `"{"username": "lydiahallie"}"`
+- C: `"["level", "health"]"`
+- D: `"{"username": "lydiahallie", "level":19, "health":90}"`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: A
+
+`JSON.stringify` এর দ্বিতীয় আর্গুমেন্টটি হলো _রিপ্লেসার_। রিপ্লেসারটি একটি ফাংশন অথবা অ্যারে হতে পারে এবং মানগুলি কি এবং কিভাবে স্ট্রিংগিফাই করা হবে সেটা নির্দিষ্ট করে দিতে আপনাকে এটার উপর আরো নিয়ন্ত্রন দেয়।
+
+যদি রিপ্লেসারটি একটি _অ্যারে_ হয়, তবে কেবলমাত্র অ্যারেতে থাকা প্রোপার্টির নামগুলি স্ট্রিং-এ যোগ করা হবে। এক্ষেত্রে `"level"` এবং `"health"` নামের প্রোপার্টিগুলি শুধুমাত্র অন্তর্ভুক্ত করা হয়েছে, `"username"` প্রোপার্টি বাদ দেয়া হয়। `data` এখন `"{"level":19, "health":90}"` এটার সমান।
+
+যদি রিপ্লেসারটি একটি _ফাংশন_ হয়, তবে এই ফাংশনটি স্ট্রিংগিফাই করা অবজেক্টের প্রতিটি প্রোপার্টিতে কল হয়। এই ফাংশন থেকে রিটার্ন করা প্রতিটি প্রোপার্টির মান জেসন স্ট্রিং-এ যোগ করা হবে। যদি মানটি `undefined` হয়, তবে এই প্রোপার্টিটি জেসন স্ট্রিং থেকে বাদ দেয়া হবে।
+
+</p>
+</details>
+
+---
+
+###### ৬৩. আউটপুট কি হবে?
+
+```javascript
+let num = 10;
+
+const increaseNumber = () => num++;
+const increasePassedNumber = number => number++;
+
+const num1 = increaseNumber();
+const num2 = increasePassedNumber(num1);
+
+console.log(num1);
+console.log(num2);
+```
+
+- A: `10`, `10`
+- B: `10`, `11`
+- C: `11`, `11`
+- D: `11`, `12`
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+The unary operator `++` _first returns_ the value of the operand, _then increments_ the value of the operand. The value of `num1` is `10`, since the `increaseNumber` function first returns the value of `num`, which is `10`, and only increments the value of `num` afterwards.
+
+`num2` is `10`, since we passed `num1` to the `increasePassedNumber`. `number` is equal to `10`(the value of `num1`. Again, the unary operator `++` _first returns_ the value of the operand, _then increments_ the value of the operand. The value of `number` is `10`, so `num2` is equal to `10`.
+
+</p>
+</details>
+
+---
+
+###### 64. What's the output?
+
+```javascript
+const value = { number: 10 };
+
+const multiply = (x = { ...value }) => {
+  console.log((x.number *= 2));
+};
+
+multiply();
+multiply();
+multiply(value);
+multiply(value);
+```
+
+- A: `20`, `40`, `80`, `160`
+- B: `20`, `40`, `20`, `40`
+- C: `20`, `20`, `20`, `40`
+- D: `NaN`, `NaN`, `20`, `40`
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+
+In ES6, we can initialize parameters with a default value. The value of the parameter will be the default value, if no other value has been passed to the function, or if the value of the parameter is `"undefined"`. In this case, we spread the properties of the `value` object into a new object, so `x` has the default value of `{ number: 10 }`.
+
+The default argument is evaluated at _call time_! Every time we call the function, a _new_ object is created. We invoke the `multiply` function the first two times without passing a value: `x` has the default value of `{ number: 10 }`. We then log the multiplied value of that number, which is `20`.
+
+The third time we invoke multiply, we do pass an argument: the object called `value`. The `*=` operator is actually shorthand for `x.number = x.number * 2`: we modify the value of `x.number`, and log the multiplied value `20`.
+
+The fourth time, we pass the `value` object again. `x.number` was previously modified to `20`, so `x.number *= 2` logs `40`.
+
+</p>
+</details>
+
+---
+
+###### 65. What's the output?
+
+```javascript
+[1, 2, 3, 4].reduce((x, y) => console.log(x, y));
+```
+
+- A: `1` `2` and `3` `3` and `6` `4`
+- B: `1` `2` and `2` `3` and `3` `4`
+- C: `1` `undefined` and `2` `undefined` and `3` `undefined` and `4` `undefined`
+- D: `1` `2` and `undefined` `3` and `undefined` `4`
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+
+The first argument that the `reduce` method receives is the _accumulator_, `x` in this case. The second argument is the _current value_, `y`. With the reduce method, we execute a callback function on every element in the array, which could ultimately result in one single value.
+
+In this example, we are not returning any values, we are simply logging the values of the accumulator and the current value.
+
+The value of the accumulator is equal to the previously returned value of the callback function. If you don't pass the optional `initialValue` argument to the `reduce` method, the accumulator is equal to the first element on the first call.
+
+On the first call, the accumulator (`x`) is `1`, and the current value (`y`) is `2`. We don't return from the callback function, we log the accumulator and current value: `1` and `2` get logged.
+
+If you don't return a value from a function, it returns `undefined`. On the next call, the accumulator is `undefined`, and the current value is `3`. `undefined` and `3` get logged.
+
+On the fourth call, we again don't return from the callback function. The accumulator is again `undefined`, and the current value is `4`. `undefined` and `4` get logged.
+
+</p>
+</details>
+  
+---
