@@ -31,6 +31,7 @@ Feel free to reach out to me! 😊 <br />
 - [🇯🇵 日本語](./ja-JA/README-ja_JA.md)
 - [🇰🇷 한국어](./ko-KR/README-ko_KR.md)
 - [🇳🇱 Nederlands](./nl-NL/README.md)
+- [🇵🇱 Polski](./pl-PL/README.md)
 - [🇧🇷 Português Brasil](./pt-BR/README_pt_BR.md)
 - [🇷🇺 Русский](./ru-RU/README.md)
 - [🇹🇭 ไทย](./th-TH/README-th_TH.md)
@@ -1645,7 +1646,9 @@ console.log(myCar.make);
 
 #### Answer: B
 
-When you return a property, the value of the property is equal to the _returned_ value, not the value set in the constructor function. We return the string `"Maserati"`, so `myCar.make` is equal to `"Maserati"`.
+When a constructor function is called with the `new` keyword, it creates an object and sets the `this` keyword to refer to that object. By default, if the constructor function doesn't explicitly return anything, it will return the newly created object.
+
+In this case, the constructor function `Car` explicitly returns a new object with `make` set to `"Maserati"`, which overrides the default behavior. Therefore, when `new Car()` is called, the _returned_ object is assigned to `myCar`, resulting in the output being `"Maserati"` when `myCar.make` is accessed.
 
 </p>
 </details>
