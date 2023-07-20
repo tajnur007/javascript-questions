@@ -1979,21 +1979,21 @@ console.log(num2);
 - C: `11`, `11`
 - D: `11`, `12`
 
-<details><summary><b>Answer</b></summary>
+<details><summary><b>উত্তর</b></summary>
 <p>
 
-#### Answer: A
+#### উত্তর: A
 
-The unary operator `++` _first returns_ the value of the operand, _then increments_ the value of the operand. The value of `num1` is `10`, since the `increaseNumber` function first returns the value of `num`, which is `10`, and only increments the value of `num` afterwards.
+ইউনারি অপারেটর `++` প্রথমে অপারেন্ডের মান রিটার্ন করে, তারপর অপারেন্ডের মান বৃদ্ধি করে। `num1` এর মান হলো `10`, কারণ `increaseNumber` ফাংশনটি প্রথমে `num` এর মান রিটার্ন করে যার মান হলো `10`, তারপর `num` এর মান বৃদ্ধি করে।
 
-`num2` is `10`, since we passed `num1` to the `increasePassedNumber`. `number` is equal to `10`(the value of `num1`. Again, the unary operator `++` _first returns_ the value of the operand, _then increments_ the value of the operand. The value of `number` is `10`, so `num2` is equal to `10`.
+`num2` এর মান হলো `10`, কারণ আমরা `num1` কে `increasePassedNumber` ফাংশনে পাস করেছি। `number` এর মান হলো `10` (এটি `num1` এর মান)। আবার, ইউনারি অপারেটর `++` প্রথমে অপারেন্ডের মান রিটার্ন করে, তারপর অপারেন্ডের মান বৃদ্ধি করে। `number` এর মান হলো `10`, একারণে `num2` এর মান হলো `10`।
 
 </p>
 </details>
 
 ---
 
-###### 64. What's the output?
+###### ৬৪. আউটপুট কি হবে?
 
 ```javascript
 const value = { number: 10 };
@@ -2013,51 +2013,51 @@ multiply(value);
 - C: `20`, `20`, `20`, `40`
 - D: `NaN`, `NaN`, `20`, `40`
 
-<details><summary><b>Answer</b></summary>
+<details><summary><b>উত্তর</b></summary>
 <p>
 
-#### Answer: C
+#### উত্তর: C
 
-In ES6, we can initialize parameters with a default value. The value of the parameter will be the default value, if no other value has been passed to the function, or if the value of the parameter is `"undefined"`. In this case, we spread the properties of the `value` object into a new object, so `x` has the default value of `{ number: 10 }`.
+ইএস৬ (ES6)-এ আমরা ডিফল্ট মান দিয়ে প্যারামিটার সেট করতে পারি। যদি ফাংশনে প্যারামিটার হিসেবে কোনো মান পাস করা না হয় অথবা প্যারামিটারের মান `"undefined"` হয় সেক্ষেত্রে ডিফল্ট মানটি হয় প্যারামিটারের মান। এখানে আমরা নতুন একটি অবজেক্টে `value` অবজেক্টের প্রপার্টিগুলি স্প্রেড করে দিয়েছি, সুতরাং `x` এর ডিফল্ট মান হলো `{ number: 10 }`।
 
-The default argument is evaluated at _call time_! Every time we call the function, a _new_ object is created. We invoke the `multiply` function the first two times without passing a value: `x` has the default value of `{ number: 10 }`. We then log the multiplied value of that number, which is `20`.
+ডিফল্ট আর্গুমেন্টটি _ফাংশন কল টাইমে_ ইভালুয়েট করা হয়! প্রতিবার আমরা ফাংশনটি কল করলে একটি _নতুন_ অবজেক্ট তৈরি হয়। কোনো মান পাস করা ছাড়াই আমরা প্রথম দুই বার `multiply` ফাংশনটি কল করেছি: ডিফল্ট `{ number: 10 }` মানটি হলো `x` এর মান। এরপর আমরা এই সংখ্যার গুণিতক লগ করেছি, যেটা হলো `20`।
 
-The third time we invoke multiply, we do pass an argument: the object called `value`. The `*=` operator is actually shorthand for `x.number = x.number * 2`: we modify the value of `x.number`, and log the multiplied value `20`.
+তৃতীয় বার আমরা `multiply` ফাংশনটি কল করার ক্ষেত্রে আর্গুমেন্ট হিসেবে `value` অবজেক্টটি পাস করেছি। `*=` অপারেটরটি হলো `x.number = x.number * 2`-এর সংক্ষিপ্ত রূপ: আমরা `x.number` এর মান পরিবর্তন করেছি এবং গুণিতক করা মান `20` লগ করেছি।
 
-The fourth time, we pass the `value` object again. `x.number` was previously modified to `20`, so `x.number *= 2` logs `40`.
+চতুর্থ বার আমরা আবার `value` অবজেক্টটি পাস করেছি। `x.number` এর মান আগেই `20`-এ পরিবর্তিত হয়েছিলো, একারণে `x.number *= 2` এক্সপ্রেশনটি `40` লগ করে।
 
 </p>
 </details>
 
 ---
 
-###### 65. What's the output?
+###### ৬৫. আউটপুট কি হবে?
 
 ```javascript
 [1, 2, 3, 4].reduce((x, y) => console.log(x, y));
 ```
 
-- A: `1` `2` and `3` `3` and `6` `4`
-- B: `1` `2` and `2` `3` and `3` `4`
-- C: `1` `undefined` and `2` `undefined` and `3` `undefined` and `4` `undefined`
-- D: `1` `2` and `undefined` `3` and `undefined` `4`
+- A: `1` `2` এবং `3` `3` এবং `6` `4`
+- B: `1` `2` এবং `2` `3` এবং `3` `4`
+- C: `1` `undefined` এবং `2` `undefined` এবং `3` `undefined` এবং `4` `undefined`
+- D: `1` `2` এবং `undefined` `3` এবং `undefined` `4`
 
-<details><summary><b>Answer</b></summary>
+<details><summary><b>উত্তর</b></summary>
 <p>
 
-#### Answer: D
+#### উত্তর: D
 
-The first argument that the `reduce` method receives is the _accumulator_, `x` in this case. The second argument is the _current value_, `y`. With the reduce method, we execute a callback function on every element in the array, which could ultimately result in one single value.
+`reduce` মেথডটির প্রথম আর্গুমেন্টটি হলো _অ্যাকুমুলেটর_, যেটা এক্ষেত্রে `x`। দ্বিতীয় আর্গুমেন্টটি হলো _বর্তমান মান_, এক্ষেত্রে `y`। `reduce` মেথড ব্যবহার করে আমরা অ্যারের প্রত্যেক উপাদানের উপরে একটি কলব্যাক ফাংশন কল করতে পারি, যা সবশেষে একটি একক মান ফলাফল হিসেবে পাওয়া যাবে।
 
-In this example, we are not returning any values, we are simply logging the values of the accumulator and the current value.
+এই উদাহরণে আমরা কোনো মান রিটার্ন করি নাই, আমরা শুধুমাত্র অ্যাকুমুলেটর এবং বর্তমান মানটি লগ করেছি।
 
-The value of the accumulator is equal to the previously returned value of the callback function. If you don't pass the optional `initialValue` argument to the `reduce` method, the accumulator is equal to the first element on the first call.
+পূর্বে কলব্যাক ফাংশন থেকে রিটার্ন করা মানটি হলো অ্যাকুমুলেটরের মান। আপনি যদি `reduce` মেথডে অপশনাল `initialValue` আর্গুমেন্টটি পাস না করেন, তবে প্রথম কলে প্রথম উপাদানটি হবে অ্যাকুমুলেটরের মান।
 
-On the first call, the accumulator (`x`) is `1`, and the current value (`y`) is `2`. We don't return from the callback function, we log the accumulator and current value: `1` and `2` get logged.
+প্রথম কলে, অ্যাকুমুলেটর (`x`) হলো `1`, এবং বর্তমান মান (`y`) হলো `2`। আমরা কলব্যাক ফাংশন থেকে কোনো মান রিটার্ন করিনি, আমরা অ্যাকুমুলেটর এবং বর্তমান মানটি লগ করেছি: এজন্য `1` এবং `2` লগ হয়েছে।
 
-If you don't return a value from a function, it returns `undefined`. On the next call, the accumulator is `undefined`, and the current value is `3`. `undefined` and `3` get logged.
+আপনি যদি ফাংশন থেকে কোন মান রিটার্ন না করেন তবে এটি `undefined` রিটার্ন করে। একারণে পরবর্তী কলে অ্যাকুমুলেটরের মান হলো `undefined`, এবং বর্তমান মান হলো `3`। `undefined` এবং `3` লগ হয়েছে।
 
-On the fourth call, we again don't return from the callback function. The accumulator is again `undefined`, and the current value is `4`. `undefined` and `4` get logged.
+চতুর্থ কলে, আমরা আবার কলব্যাক ফাংশন থেকে কোনো মান রিটার্ন করিনি। অ্যাকুমুলেটরটি আবারও `undefined`, এবং বর্তমান মান হলো `4`। `undefined` এবং `4` লগ হয়েছে।
 
 </p>
 </details>
