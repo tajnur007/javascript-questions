@@ -2253,9 +2253,9 @@ console.log(/* 2 */); // JavaScript loves you back ❤️
 
 একটি জেনারেটর ফাংশন যখন `yield` কীওয়ার্ড পায় তখন তার এক্সিকিউশন থামিয়ে দেয়। প্রথমে আমাদেরকে ফাংশনটির মাধ্যমে "Do you love JavaScript?" স্ট্রিং টি প্রদর্শন করতে হবে, যা `game.next().value` কল করে করা যাবে।
 
-`yield` কীওয়ার্ডটি না পাওয়া পর্যন্ত এটি প্রতিটি লাইন এক্সিকিউট করেছে। ফাংশনের প্রথম লাইনে একটি `yield` কীওয়ার্ড আছে: প্রথম `yield` পাওয়া মাত্রই এক্সিকিউশন থেমে যায়! _এর মানে, ভ্যারিয়েবল `answer` এর মান এখনও ডিফাইন করা হয়নি!_
+`yield` কীওয়ার্ডটি না পাওয়া পর্যন্ত এটি প্রতিটি লাইন এক্সিকিউট করেছে। ফাংশনের প্রথম লাইনে একটি `yield` কীওয়ার্ড আছে: প্রথম `yield` পাওয়া মাত্রই এক্সিকিউশন থেমে যায়! _এর মানে, ভেরিয়েবল `answer` এর মান এখনও ডিফাইন করা হয়নি!_
 
-যখন আমরা `game.next("Yes").value` কল করি তখন `next()` ফাংশনে পাঠানো প্যারামিটারের মান দিয়ে আগের `yield` টি প্রতিস্থাপিত হয়, যেটি এক্ষেত্রে `"Yes"`। ভ্যারিয়েবল `answer` এর মান এখন `"Yes"`। if-স্টেটমেন্টের কন্ডিশনটি `false` রিটার্ন করে এবং `JavaScript loves you back ❤️` লগ হয়।
+যখন আমরা `game.next("Yes").value` কল করি তখন `next()` ফাংশনে পাঠানো প্যারামিটারের মান দিয়ে আগের `yield` টি প্রতিস্থাপিত হয়, যেটি এক্ষেত্রে `"Yes"`। ভেরিয়েবল `answer` এর মান এখন `"Yes"`। if-স্টেটমেন্টের কন্ডিশনটি `false` রিটার্ন করে এবং `JavaScript loves you back ❤️` লগ হয়।
 
 </p>
 </details>
@@ -2389,6 +2389,69 @@ console.log(shape);
 যখন আমরা ভ্যারিয়েবল `shape` তৈরি করি এবং তা ফ্রোজেন অবজেক্ট `box` এর সাথে সেট করি, `shape` অবজেক্টটিও তখন ফ্রোজেন অবজেক্টটিকে রেফার করে থাকে। একটি অবজেক্ট ফ্রোজেন কিনা তা যাচাই করতে আপনি `Object.isFrozen` ব্যবহার করতে পারেন। এই ক্ষেত্রে, `Object.isFrozen(shape)` সত্য রিটার্ন করবে যেহেতু `shape` ভ্যারিয়েবলটি একটি ফ্রোজেন অবজেক্টকে রেফারেন্স করে আছে।
 
 যেহেতু `shape` ফ্রোজেন এবং `x` এর মান কোনো অবজেক্ট নয় সেহেতু আমরা `x` প্রোপার্টিকে পরিবর্তন করতে পারি না। `x` এর মান এখনো `10` এবং `{ x: 10, y: 20 }` লগ হয়।
+
+</p>
+</details>
+
+---
+
+###### ৭৬. আউটপুট কি হবে?
+
+```javascript
+const { firstName: myName } = { firstName: 'Lydia' };
+
+console.log(firstName);
+```
+
+- A: `"Lydia"`
+- B: `"myName"`
+- C: `undefined`
+- D: `ReferenceError`
+
+<details><summary><b>উত্তর</b></summary>
+<p>
+
+#### উত্তর: D
+
+[destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) সিনট্যাক্স ব্যবহার করে আমরা অ্যারে অথবা অবজেক্টের প্রপার্টিগুলি থেকে মান বিশেষ ভেরিয়েবলে অনপ্যাক করতে পারি:
+
+```javascript
+const { firstName } = { firstName: 'Lydia' };
+// ES5 version:
+// var firstName = { firstName: 'Lydia' }.firstName;
+
+console.log(firstName); // "Lydia"
+```
+
+এছাড়াও একটি অবজেক্ট থেকে একটি প্রপার্টিকে অনপ্যাক করা যায় এবং সেই প্রপার্টিকে অবজেক্টের প্রপার্টির পরিবর্তে ভিন্ন একটি নামে অ্যাসাইন করা যায়:
+
+```javascript
+const { firstName: myName } = { firstName: 'Lydia' };
+// ES5 version:
+// var myName = { firstName: 'Lydia' }.firstName;
+
+console.log(myName); // "Lydia"
+console.log(firstName); // Uncaught ReferenceError: firstName is not defined
+```
+
+সুতরাং, `firstName` নামে কোনো ভেরিয়েবল নেই, তাই এর মান অ্যাক্সেস করার চেষ্টা করলে এটি একটি `ReferenceError` দেখাবে।
+
+**নোট:** `global scope` এর প্রোপার্টিগুলি সম্পর্কে সতর্ক থাকুন:
+
+```javascript
+const { name: myName } = { name: 'Lydia' };
+
+console.log(myName); // "lydia"
+console.log(name); // "" ----- Browser e.g. Chrome
+console.log(name); // ReferenceError: name is not defined  ----- NodeJS
+
+```
+
+জাভাস্ক্রিপ্ট যখন _বর্তমান স্কোপে_ কোনো একটি ভেরিয়েবলকে খুঁজে না পায় তখন এটি [Scope chain](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch3.md)-এ চলে যায় এবং ভেরিয়েবলটিকে খুঁজতে থাকে এবং যদি এটি সর্বোচ্চ স্তরের স্কোপ, অর্থাৎ গ্লোবাল স্কোপে, পৌঁছে যায় এবং সেখানোও যদি এটিকে খুঁজে না পায় তবে এটি একটি `ReferenceError` থ্রো করবে।
+
+- **ব্রাউজারগুলোতে** যেমন _Chrome_-এ `name` একটি _ডেপ্রিকেটেড গ্লোবাল স্কোপ প্রোপার্টি_। এই উদাহরণে কোডটি _গ্লোবাল স্কোপে_ চলছে এবং সেখানে ইউজার কর্তৃক `name` নামে কোনো লোকাল ভেরিয়েবল নেই; তাই এটি গ্লোবাল স্কোপে পূর্বনির্ধারিত _ভেরিয়েবল/প্রোপার্টি_ গুলোর মধ্যে খোঁজার চেষ্টা করে, যা ব্রাউজারের ক্ষেত্রে `window` অবজেক্টে সার্চ করে এবং সে [window.name](https://developer.mozilla.org/en-US/docs/Web/API/Window/name) এর মান বের করবে যা একটি ফাঁকা স্ট্রিং।
+
+- **NodeJS**-এর `global` অবজেক্টে এই ধরনের কোনো প্রোপার্টি নেই, তাই অস্তিত্ব না থাকা কোনো ভেরিয়েবলকে অ্যাক্সেস করার চেষ্টা করলে এটি একটি [ReferenceError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined) দিবে।
 
 </p>
 </details>
